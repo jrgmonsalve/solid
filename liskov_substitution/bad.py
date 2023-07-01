@@ -1,23 +1,17 @@
-from math import pi
-
-class Shape:
-    def __init__(self, shape_type, **kwargs):
-        self.shape_type = shape_type
-        if self.shape_type == "rectangle":
-            self.width = kwargs["width"]
-            self.height = kwargs["height"]
-        elif self.shape_type == "circle":
-            self.radius = kwargs["radius"]
-
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
     def calculate_area(self):
-        if self.shape_type == "rectangle":
-            return self.width * self.height
-        elif self.shape_type == "circle":
-            return pi * self.radius**2
-
-
-rectangle = Shape("rectangle", width=10, height=5)
-rectangle.calculate_area()
-
-circle = Shape("circle", radius=5)
-circle.calculate_area()
+        return self.width * self.height
+    
+class Square(Rectangle):
+    def __init__(self, side):
+        super().__init__(side, side)
+    
+    def __setattr__(self, key, value):
+        super().__setattr__(key, value)
+        if key in ("width", "height"):
+            self.__dict__["width"] = value
+            self.__dict__["height"] = value
